@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Paths */
+    "baseUrl": "./",
+    "paths": {
+      "@app": ["src/app"],
+      "@app/*": ["src/app/*"],
+      "@entities": ["src/entities"],
+      "@entities/*": ["src/entities/*"],
+      "@features": ["src/features"],
+      "@features/*": ["src/features/*"],
+      "@pages": ["src/pages"],
+      "@pages/*": ["src/pages/*"],
+      "@widgets": ["src/widgets"],
+      "@widgets/*": ["src/widgets/*"],
+      "@shared": ["src/shared"],
+      "@shared/*": ["src/shared/*"]
+    }
+  },
+  "include": ["vite.config.ts"]
+}
