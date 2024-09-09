@@ -10,83 +10,101 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "@pages/__root";
-import { Route as IndexImport } from "@pages/index";
-import { Route as TodosIndexImport } from "@pages/todos/index";
+import { Route as rootRoute } from './pages/__root'
+import { Route as siteIndexImport } from './pages/(site)/index'
+import { Route as siteTodosIndexImport } from './pages/(site)/todos/index'
+import { Route as siteTodosIdIndexImport } from './pages/(site)/todos/$id/index'
 
 // Create/Update Routes
 
-const IndexRoute = IndexImport.update({
-  path: "/",
+const siteIndexRoute = siteIndexImport.update({
+  path: '/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
-const TodosIndexRoute = TodosIndexImport.update({
-  path: "/todos/",
+const siteTodosIndexRoute = siteTodosIndexImport.update({
+  path: '/todos/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
+
+const siteTodosIdIndexRoute = siteTodosIdIndexImport.update({
+  path: '/todos/$id/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/todos/": {
-      id: "/todos/";
-      path: "/todos";
-      fullPath: "/todos";
-      preLoaderRoute: typeof TodosIndexImport;
-      parentRoute: typeof rootRoute;
-    };
+    '/(site)/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof siteIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/(site)/todos/': {
+      id: '/todos/'
+      path: '/todos'
+      fullPath: '/todos'
+      preLoaderRoute: typeof siteTodosIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/(site)/todos/$id/': {
+      id: '/todos/$id/'
+      path: '/todos/$id'
+      fullPath: '/todos/$id'
+      preLoaderRoute: typeof siteTodosIdIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/todos": typeof TodosIndexRoute;
+  '/': typeof siteIndexRoute
+  '/todos': typeof siteTodosIndexRoute
+  '/todos/$id': typeof siteTodosIdIndexRoute
 }
 
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/todos": typeof TodosIndexRoute;
+  '/': typeof siteIndexRoute
+  '/todos': typeof siteTodosIndexRoute
+  '/todos/$id': typeof siteTodosIdIndexRoute
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute;
-  "/": typeof IndexRoute;
-  "/todos/": typeof TodosIndexRoute;
+  __root__: typeof rootRoute
+  '/': typeof siteIndexRoute
+  '/todos/': typeof siteTodosIndexRoute
+  '/todos/$id/': typeof siteTodosIdIndexRoute
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/todos";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/todos";
-  id: "__root__" | "/" | "/todos/";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/todos' | '/todos/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/todos' | '/todos/$id'
+  id: '__root__' | '/' | '/todos/' | '/todos/$id/'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  TodosIndexRoute: typeof TodosIndexRoute;
+  siteIndexRoute: typeof siteIndexRoute
+  siteTodosIndexRoute: typeof siteTodosIndexRoute
+  siteTodosIdIndexRoute: typeof siteTodosIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  TodosIndexRoute: TodosIndexRoute,
-};
+  siteIndexRoute: siteIndexRoute,
+  siteTodosIndexRoute: siteTodosIndexRoute,
+  siteTodosIdIndexRoute: siteTodosIdIndexRoute,
+}
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
@@ -97,14 +115,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/todos/"
+        "/todos/",
+        "/todos/$id/"
       ]
     },
     "/": {
-      "filePath": "index.tsx"
+      "filePath": "(site)/index.tsx"
     },
     "/todos/": {
-      "filePath": "todos/index.tsx"
+      "filePath": "(site)/todos/index.tsx"
+    },
+    "/todos/$id/": {
+      "filePath": "(site)/todos/$id/index.tsx"
     }
   }
 }

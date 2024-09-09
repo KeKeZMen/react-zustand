@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
 
-interface ENV {
+declare interface env {
   VITE_API_URL: string;
 }

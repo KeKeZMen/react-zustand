@@ -8,7 +8,6 @@ export default defineConfig({
     react(),
     TanStackRouterVite({
       routesDirectory: path.resolve(__dirname, "src/pages"),
-      generatedRouteTree: ""
     }),
   ],
   resolve: {
