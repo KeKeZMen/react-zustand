@@ -1,15 +1,26 @@
 import { create, StateCreator } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { persist, devtools, createJSONStorage } from "zustand/middleware";
 
-export const createStoreWithPersist = <T>(
-  storeName: string,
-  storage: Storage,
-  storeConfig: StateCreator<T>,
-) => {
+type CreateStoreWithMiddlewaresType<T> = {
+  name: string;
+  store: StateCreator<T>;
+};
+
+export const CreateStoreWithMiddlewares = <T>({
+  name,
+  store,
+}: CreateStoreWithMiddlewaresType<T>) => {
   return create(
-    persist<T>(storeConfig, {
-      name: storeName,
-      storage: createJSONStorage(() => storage),
-    }),
+    devtools(
+      persist<T>(store, {
+        name,
+        storage: createJSONStorage(() => localStorage),
+      }),
+      {
+        name,
+        enabled: import.meta.env.DEV,
+        anonymousActionType: `${name}/action`,
+      },
+    ),
   );
 };

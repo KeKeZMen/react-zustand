@@ -8,9 +8,14 @@ type PropsType = {
 };
 
 const TodoDiv = styled.div(() => ({
-  display: "flex",
-  alignItems: "center",
+  display: "grid",
+  gridTemplateColumns: "0.5fr 1fr 0.5fr 1fr",
   gap: 15,
+}));
+
+const EditInput = styled.input(() => ({
+  border: "none",
+  outline: "none",
 }));
 
 export const TodoRow: FC<PropsType> = ({ todo }) => {
@@ -59,7 +64,7 @@ export const TodoRow: FC<PropsType> = ({ todo }) => {
       {!isEditing ? (
         <p onDoubleClick={handleEdit}>{title}</p>
       ) : (
-        <input
+        <EditInput
           type="text"
           onKeyUp={handleSave}
           onChange={handleEditTitle}

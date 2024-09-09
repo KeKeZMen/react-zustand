@@ -1,4 +1,4 @@
-import { baseAxios, createStoreWithPersist } from "@shared";
+import { baseAxios, CreateStoreWithMiddlewares } from "@shared";
 
 export interface ITodo {
   id: number;
@@ -6,11 +6,11 @@ export interface ITodo {
   completed: boolean;
 }
 
-type TodoStoreStateType = {
+type TodosStoreStateType = {
   todos: ITodo[];
 };
 
-type TodoStoreActionsType = {
+type TodosStoreActionsType = {
   loadTodos: () => Promise<void>;
   addTodo: (title: string) => void;
   toogleTodo: (id: number) => void;
@@ -20,12 +20,11 @@ type TodoStoreActionsType = {
   completeAll: () => void;
 };
 
-export type TodoStoreType = TodoStoreStateType & TodoStoreActionsType;
+export type TodosStoreType = TodosStoreStateType & TodosStoreActionsType;
 
-export const useTodoStore = createStoreWithPersist<TodoStoreType>(
-  "todos",
-  localStorage,
-  (set, get) => ({
+export const useTodoStore = CreateStoreWithMiddlewares<TodosStoreType>({
+  name: "todos",
+  store: (set, get) => ({
     todos: [],
     loadTodos: async () => {
       const res = await baseAxios.get("/todos?_limit=10");
@@ -74,4 +73,4 @@ export const useTodoStore = createStoreWithPersist<TodoStoreType>(
       }));
     },
   }),
-);
+});
