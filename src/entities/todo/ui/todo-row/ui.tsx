@@ -26,6 +26,17 @@ export const TodoRow: FC<PropsType> = ({ todo }) => {
   const [isEditing, setIsEditing] = useState(false);
   const handleEdit = () => {
     setIsEditing((prev) => !prev);
+    /* сработает, так как setState это микротаска
+      const p = new Promise((resolve) => {
+        resolve(true);
+      });
+      p.then(() => {
+        editInputRef.current?.focus();
+      });
+    
+      не сработает из-за того, что это синхронный код
+      editInputRef.current?.focus()
+    Ы*/
   };
 
   const [title, setTitle] = useState(todo.title);
