@@ -66,6 +66,7 @@ export const TodoRow: FC<PropsType> = ({ todo }) => {
       ) : (
         <EditInput
           type="text"
+          autoFocus
           onKeyUp={handleSave}
           onChange={handleEditTitle}
           onBlur={handleBlur}
